@@ -6,6 +6,23 @@ Each test is dict with
     "answer" -- your right answer
     "explanation" -- not necessary key, it's using for additional info in animation.
 """
+from random import choice, randint, randrange
+
+
+def random_test():
+    answer = randint(5, 20)
+    data = [randint(50, 100)]
+    e = choice([1, -1])
+    for _ in range(answer + 1):
+        for _ in range(randint(1, 5)):
+            data.append(randrange(data[-1] + e, data[-1] + 4 * e, e))
+        e *= -1
+    # To respect the precondition that data does not contain negative numbers:
+    m = min(data)
+    if m < 0:
+        m -= randint(0, 10)  # to not always have 0 as min in such case
+        data = [n - m for n in data]
+    return {"input": [data], "answer": answer}
 
 
 TESTS = {
@@ -56,6 +73,6 @@ TESTS = {
             "input": [[3, 3, 3, 4]],
             "answer": 0
         }
-
-    ]
+    ],
+    "Random": [random_test() for _ in range(10)],
 }
