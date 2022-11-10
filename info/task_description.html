@@ -1,22 +1,28 @@
 <p>
-  Given a list of integers.
-  Your task in this mission is to find how many times sorting directions was changed in the given list.
+  You are given {% if is_js %}an Array of numbers{% else %}a list of integers{% endif %}.
+  Your task in this mission is to find, how many times the sorting direction was changed in the given {% if is_js %}Array{% else %}list{% endif %}. If the elements are equal - the previous sorting direction remains the same, if the sequence starts from the same elements - look for the next different to determine the sorting direction.
 </p>
-
 <p>
-  Changing the sorting direction is when the last number in the list 1, 2, 3 is followed by a number < 3.
+  Let's look on the scheme:
 </p>
-
 <p style="text-align: center;">
     <img  title="changing_dir" src="{{MEDIA}}changing_dir.png" alt="changing_dir" style="max-height: 255px"/>
 </p>
-
 <p>
-  <strong>Input:</strong> List.
+There are three sorting directions:
+<ul>
+  <li>on the chunk <b class="code">1, 2, 2</b> - up (increasing);</li>
+  <li>on the chunk <b class="code">2, 1</b> - down (decreasing);</li>
+  <li>and on the chunk <b class="code">1, 2, 2</b> - up again.</li>
+</ul>
+So, you have two points of changing the sorting direction: #1 - from up to down, and #2 - from down to up. That's the result your function should return.
+</p>
+<p>
+  <strong>Input:</strong> {% if is_js %}An Array of numbers{% else %}A list of integers{% endif %}.
 </p>
 
 <p>
-  <strong>Output:</strong> Int.
+  <strong>Output:</strong> {% if is_js %}Number{% else %}Integer{% endif %}.
 </p>
 
 <div class="for_info_only">
@@ -25,9 +31,10 @@
   </p>
 <pre class="brush: {% if is_js %}javascript{% else %}python{% endif %}">{{init_code_tmpl}}</pre>
 </div>
-
 <p>
     <strong>Precondition:</strong>
-    <p><li><i>the list is non-empty</i></li></p>
-    <p><li><i>the elements in the list is positive integers</i></li></p>
+    <ul>
+    <li><i>the list is non-empty;</i></li>
+    <li><i>the elements in the list are positive integers.</i></li>
+    </ul>
 </p>
