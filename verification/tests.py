@@ -10,6 +10,7 @@ from random import choice, randint, randrange
 
 
 def random_test():
+    
     answer = randint(5, 20)
     data = [randint(50, 100)]
     e = choice([1, -1])
@@ -29,50 +30,50 @@ TESTS = {
     "Basics": [
         {
             "input": [[1, 2, 3, 4, 5]],
-            "answer": 0
+            "answer": 0,
         },
         {
             "input": [[1, 2, 3, 2, 1]],
-            "answer": 1
+            "answer": 1,
         },
         {
             "input": [[1, 2, 2, 1, 2, 2]],
-            "answer": 2
+            "answer": 2,
         }
     ],
     "Extra": [
         {
             "input": [[1, 2, 2, 1, 2, 1, 2]],
-            "answer": 4
+            "answer": 4,
         },
         {
             "input": [[1, 2, 3, 5, 4, 2, 5, 7, 8, 3, 2, 1]],
-            "answer": 3
+            "answer": 3,
         },
         {
             "input": [[0]],
-            "answer": 0
+            "answer": 0,
         },
         {
             "input": [[6, 6, 6, 4, 1, 2, 5, 9, 7, 8, 5, 9, 4, 2, 6]],
-            "answer": 7
+            "answer": 7,
         },
         {
             "input": [[5, 4, 9, 10, 10, 10, 10, 3, 8, 5, 1, 9, 9, 4, 1]],
-            "answer": 6
+            "answer": 6,
         },
         {
             "input": [[8, 9, 10, 5, 2, 8, 3, 7, 6, 9]],
-            "answer": 6
+            "answer": 6,
         },
         {
             "input": [[2, 2, 2, 2, 2, 1]],
-            "answer": 0
+            "answer": 0,
         },
         {
             "input": [[3, 3, 3, 4]],
-            "answer": 0
-        }
+            "answer": 0,
+        },
     ],
     "Random": [random_test() for _ in range(10)],
 }
