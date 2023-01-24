@@ -1,0 +1,186 @@
+<body data-author="freeman_lex">
+<div class="question-answer">
+    <div class="question">
+        <i>I have no idea how to start solving this mission.</i>
+    </div>
+    <div class="answer">
+        <p>
+            💡 You need to find and mark all chunks with direction, which remains the same, in the list. Since the direction changes between two adjacent chunks, the number of such changes is number of chunks minus one.
+        </p>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        <i>Ok, what should I start from?</i>
+    </div>
+    <div class="answer">
+        <p>
+            The very first step is to declare a variable <b class="code">dirs</b> with the initial value of empty list. You should store there your marks for chunks with remaining direction. 
+        </p>
+        <pre class="brush: python">
+dirs = []
+        </pre>
+        <p>
+            Now, to find the direction (order) between two elements, you need to compare them and repeat for each adjacent pair: 0-th with 1-st, 1-st with 2-nd etc. For such case <a target="_blank" href="https://www.w3schools.com/python/ref_func_zip.asp">zip()</a> built-in function is very useful! It allows to iterate over two or more sequences and take elements with the same index till the end of the shortest sequence. 
+        </p>
+        <pre class="brush: python">
+dirs = []
+for i, j in zip(...):
+    ...
+        </pre>
+        <p>
+            Where <b class="code">i</b> is each element of the first sequence, <b class="code">j</b> element with the respective index from the second sequence (since you compare two numbers you need two sequences).
+        </p>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        <i>
+            Ok, elements of what sequences should I compare?
+        </i>
+    </div>
+    <div class="answer">
+        <p>
+            Let's think. As I said above, you need to compare 0-th with 1-st, 1-st with 2-nd, 2-nd with 3-rd...So the first sequence starts from the beginning of the initial list, but the second sequence starts from the 1-st element of the initial list. 
+        </p>
+        <p>
+            To receive the second sequence for comparison as initial list from the first element, use <a target="_blank" href="https://railsware.com/blog/python-for-machine-learning-indexing-and-slicing-for-lists-tuples-strings-and-other-sequential-types/">slicing</a>.
+        </p>
+        <pre class="brush: python">
+dirs = []
+for i, j in zip(elements, elements[1:]):
+    ...
+        </pre>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        <i>
+            How should I compare the elements?
+        </i>
+    </div>
+    <div class="answer">
+        <p>
+            Here is a small remark, which you should keep in mind. For this solution we are going to use "+" for ascending order of chunk and "-" for descending. Actually, you may use any two distinct symbols.
+        </p>
+        <p>
+            Let's say <b class="code">j > i</b>, which means, that, for example, the 1-st element is bigger, then 0-th. It determines an ascending order of elements ("+"). What should you do with that? If there are no stored direction in <b class="code">dirs</b> (empty: the very first pair of elements are compared or the same elements from the beginning of the initial list and the order can not be determined) or the last stored direction of elements is not ascending ("-"), you should add new current direction to the <b class="code">dirs</b>, because the directions has just changed (or set). 
+        </p>
+        <pre class="brush: python">
+dirs = []
+for i, j in zip(elements, elements[1:]):
+    if j > i and (not dirs or dirs[-1] == '-'):
+        dirs.append('+')
+        </pre>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        <i>
+            What should I do next?
+        </i>
+    </div>
+    <div class="answer">
+        <p>
+            Complement conditional statement <b class="code">if</b> with <b class="code">elif</b> part and do the same for descending direction - <b class="code">j < i</b>.
+        </p>
+        <pre class="brush: python">
+dirs = []
+for i, j in zip(elements, elements[1:]):
+    if j > i and (not dirs or dirs[-1] == '-'):
+        dirs.append('+')
+    elif j < i and (not dirs or dirs[-1] == '+'):
+        dirs.append('-')
+        </pre>
+        <p>
+            Both comparisons are strict, because if the adjacent elements are equal, the order remains the same (no need to add a few same signs one after another) or can not be determined yet (same elements from the start of the initial list - no need to add any sign).
+        </p>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        <i>
+            What exactly should the function return?
+        </i>
+    </div>
+    <div class="answer">
+        <p>
+            If <b class="code">dirs</b> remains empty (all elements are equal) or has one element (all initial sequence has only one direction (asc or desc)), your function should return <b class="code">0</b> - no changes of direction. Otherwise, your function should return the number of changes, which is the length of <b class="code">dirs</b> minus 1, as the number of adjacent pairs inside <b class="code">dirs</b>. 
+        </p>
+        <p>
+            Here is a short way to write all these variants.
+        </p>
+        <pre class="brush: python">
+return len(dirs) - bool(dirs)
+        </pre>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        <i>So, how my final solution should look like?</i>
+    </div>
+    <div class="answer">
+        <p>
+            You just need to join the code together and wrap it into function expression.
+        </p>
+        <p>Here is the whole solution:</p>
+        <pre class="brush: python">
+def changing_direction(elements: list[int]) -> int:
+
+    dirs = []
+    for i, j in zip(elements, elements[1:]):
+        if j > i and (not dirs or dirs[-1] == '-'):
+            dirs.append('+')
+        elif j < i and (not dirs or dirs[-1] == '+'):
+            dirs.append('-')
+    
+    return len(dirs) - bool(dirs)
+        </pre>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        <i>Show me more solutions!<br />
+        'Cause I wanna be a real 🥇 Python Ninnjaa!</i>
+    </div>
+    <div class="answer">
+        <p>Sure, grab it!</p>
+        <p>
+            Every time, when direction changes, the product of current direction and previous one becomes less than 0: "+"*"-"=="-". This solution counts such products. 
+        </p>
+        <pre class="brush: python">
+def changing_direction(elements: list[int]) -> int:
+
+    dir = count = 0
+    for a, b in zip(elements, elements[1:]):
+        dir2 = a - b
+        if dir2:
+            if dir2 * dir < 0:
+                count += 1
+            dir = dir2
+
+    return count
+        </pre>
+        <p>
+            This solution is doing the following: create a list with all differences between adjacent non-equal elements, create a generator of products between adjacent differences from the previous list, count the number of negative products (a signal of the change of direction). 
+        </p>
+        <pre class="brush: python">
+def changing_direction(e: list[int]) -> int:
+
+    d = [x - y for x, y in zip(e, e[1:]) if x != y]
+
+    return sum(x * y < 0 for x, y in zip(d, d[1:]))
+        
+        </pre>
+        <p><b>Click "Best solutions" at mission menu and see a lot of other interesting solutions!</b></p>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        <i>Thanks! I know and understand more now! Everything works fine!</i>
+    </div>
+    <div class="answer">
+        👍 Glad to hear it!
+    </div>
+</div>
+</body>
