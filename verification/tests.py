@@ -31,24 +31,29 @@ TESTS = {
         {
             "input": [[1, 2, 3, 4, 5]],
             "answer": 0,
+            "description": []
         },
         {
             "input": [[1, 2, 3, 2, 1]],
             "answer": 1,
+            "description": [2]
         },
         {
             "input": [[1, 2, 2, 1, 2, 2]],
             "answer": 2,
+            "description": [2, 3]
         }
     ],
     "Extra": [
         {
             "input": [[1, 2, 2, 1, 2, 1, 2]],
             "answer": 4,
+            "description": [2, 3, 4, 5]
         },
         {
             "input": [[1, 2, 3, 5, 4, 2, 5, 7, 8, 3, 2, 1]],
             "answer": 3,
+            "description": [3, 5, 8]
         },
         {
             "input": [[0]],
@@ -57,22 +62,27 @@ TESTS = {
         {
             "input": [[6, 6, 6, 4, 1, 2, 5, 9, 7, 8, 5, 9, 4, 2, 6]],
             "answer": 7,
+            "description": [4, 7, 8, 9, 10, 11, 13]
         },
         {
             "input": [[5, 4, 9, 10, 10, 10, 10, 3, 8, 5, 1, 9, 9, 4, 1]],
             "answer": 6,
+            "description": [1, 6, 7, 8, 10, 12]
         },
         {
             "input": [[8, 9, 10, 5, 2, 8, 3, 7, 6, 9]],
             "answer": 6,
+            "description": [2, 4, 5, 6, 7, 8]
         },
         {
             "input": [[2, 2, 2, 2, 2, 1]],
             "answer": 0,
+            "description": []
         },
         {
             "input": [[3, 3, 3, 4]],
             "answer": 0,
+            "description": []
         },
     ],
     "Random": [random_test() for _ in range(10)],
