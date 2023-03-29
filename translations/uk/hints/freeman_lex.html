@@ -124,6 +124,7 @@ return len(dirs) - bool(dirs)
             Тобі просто потрібно об'єднати код разом і загорнути його у вираз функції.
         </p>
         <p>Ось повний розв'язок:</p>
+        <div class="spoiler">
         <pre class="brush: python">
 def changing_direction(elements: list[int]) -> int:
 
@@ -136,6 +137,7 @@ def changing_direction(elements: list[int]) -> int:
     
     return len(dirs) - bool(dirs)
         </pre>
+        </div>
     </div>
 </div>
 <div class="question-answer">
@@ -148,6 +150,7 @@ def changing_direction(elements: list[int]) -> int:
         <p>
             Щоразу, коли змінюється напрямок, добуток поточного напрямку та попереднього стає менше 0: "+"*"-" == "-". Це рішення підраховує кількість таких добутків.
         </p>
+        <div class="spoiler">
         <pre class="brush: python">
 def changing_direction(elements: list[int]) -> int:
 
@@ -161,9 +164,11 @@ def changing_direction(elements: list[int]) -> int:
 
     return count
         </pre>
+        </div>
         <p>
             Це рішення робить наступне: створює список з усіма різницями між сусідніми нерівними елементами, створює генератор добутків між сусідніми відмінностями в попередньому списку, підраховує кількість негативних добутків (сигнал зміни напрямку).
         </p>
+        <div class="spoiler">
         <pre class="brush: python">
 def changing_direction(e: list[int]) -> int:
 
@@ -172,6 +177,7 @@ def changing_direction(e: list[int]) -> int:
     return sum(x * y < 0 for x, y in zip(d, d[1:]))
         
         </pre>
+        </div>
         <p><b>Тисни "Best solutions" в меню місії і побачиш багато інших цікавих розв'язків!</b></p>
     </div>
 </div>
