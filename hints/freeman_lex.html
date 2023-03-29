@@ -124,6 +124,7 @@ return len(dirs) - bool(dirs)
             You just need to join the code together and wrap it into function expression.
         </p>
         <p>Here is the whole solution:</p>
+        <div class="spoiler">
         <pre class="brush: python">
 def changing_direction(elements: list[int]) -> int:
 
@@ -136,6 +137,7 @@ def changing_direction(elements: list[int]) -> int:
     
     return len(dirs) - bool(dirs)
         </pre>
+        </div>
     </div>
 </div>
 <div class="question-answer">
@@ -148,6 +150,7 @@ def changing_direction(elements: list[int]) -> int:
         <p>
             Every time, when direction changes, the product of current direction and previous one becomes less than 0: "+"*"-"=="-". This solution counts such products. 
         </p>
+        <div class="spoiler">
         <pre class="brush: python">
 def changing_direction(elements: list[int]) -> int:
 
@@ -161,9 +164,11 @@ def changing_direction(elements: list[int]) -> int:
 
     return count
         </pre>
+        </div>
         <p>
             This solution is doing the following: create a list with all differences between adjacent non-equal elements, create a generator of products between adjacent differences from the previous list, count the number of negative products (a signal of the change of direction). 
         </p>
+        <div class="spoiler">
         <pre class="brush: python">
 def changing_direction(e: list[int]) -> int:
 
@@ -172,6 +177,7 @@ def changing_direction(e: list[int]) -> int:
     return sum(x * y < 0 for x, y in zip(d, d[1:]))
         
         </pre>
+        </div>
         <p><b>Click "Best solutions" at mission menu and see a lot of other interesting solutions!</b></p>
     </div>
 </div>
