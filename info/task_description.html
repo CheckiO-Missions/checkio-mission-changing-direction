@@ -34,7 +34,7 @@ So, you have two points of changing the sorting direction: #1 - from up to down,
 <p>
     <strong>Preconditions:</strong>
     <ul>
-    <li><i>the list is non-empty;</i></li>
-    <li><i>the elements in the list are positive integers.</i></li>
+    <li><i>the {% if is_js %}<span translate="repeat">array</span>{% else %}<span translate="repeat">list</span>{% endif %} is non-empty;</i></li>
+    <li><i>the elements are positive {% if is_js %}<span translate="repeat">numbers</span>{% else %}<span translate="repeat">integers</span>{% endif %}.</i></li>
     </ul>
 </p>
