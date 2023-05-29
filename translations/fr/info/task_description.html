@@ -1,6 +1,6 @@
 <p>
   On vous donne {% if is_js %}un <span>tableau</span> <span>(array)</span> de <span>nombres</span> <span>(numbers)</span>{% else %} une <span>liste</span> <span>(list)</span> d'<span>entiers</span> <span>(integers)</span>{% endif %}.
-  Votre tâche dans cette mission est de trouver combien de fois le sens de tri a été modifié dans le<span>tableau</span> {% if is_js %}<span></span> <span>(array)</span><span> </span>{% else %} <span>liste</span> <span>(list)</span>{% endif %}. Si les éléments sont égaux - le sens de tri précédent reste le même, si la séquence commence par les mêmes éléments - recherchez la différence suivante pour déterminer le sens de tri.
+  Votre tâche dans cette mission est de trouver combien de fois le sens de tri a été modifié dans le {% if is_js %}<span>tableau</span> <span>(array)</span>{% else %}<span>liste</span> <span>(list)</span>{% endif %}. Si les éléments sont égaux - le sens de tri précédent reste le même, si la séquence commence par les mêmes éléments - recherchez la différence suivante pour déterminer le sens de tri.
 </p>
 <p>
   Examinons le schéma:
@@ -22,7 +22,7 @@ Vous avez donc deux points de changement de la direction du tri: #1 - de haut en
 </p>
 
 <p>
- <strong>Sortie:</strong> {% if is_js %}<span>Nombre</span> <span>(Number)</span>{% else %}<span>Entier</span> <span>(Integer)</span>{% endif %}.
+ <strong>Sortie:</strong> {% if is_js %}<span>Nombre</span> <span>(number)</span>{% else %}<span>Entier</span> <span>(integer)</span>{% endif %}.
 </p>
 
 <div class="for_info_only">
@@ -34,7 +34,7 @@ Vous avez donc deux points de changement de la direction du tri: #1 - de haut en
 <p>
     <strong>Conditions préalables:</strong>
     <ul>
-    <li><i>le<span>tableau</span> {% if is_js %}<span></span> <span>(array)</span><span> </span>{% else %} <span>liste</span> <span>(list)</span>{% endif %} est non vide;</i></li>
-    <li><i>les éléments sont des<span>nombres</span> positifs {% if is_js %} <span>(numbers)</span><span> </span>{% else %} <span>entiers</span> <span>(integers)</span>{% endif %}.</i></li>
+    <li><i>le {% if is_js %}<span>tableau</span> <span>(array)</span>{% else %}<span>liste</span> <span>(list)</span>{% endif %} est non vide;</i></li>
+    <li><i>les éléments sont des positifs {% if is_js %}<span>nombres</span> <span>(numbers)</span>{% else %}<span>entiers</span> <span>(integers)</span>{% endif %}.</i></li>
     </ul>
 </p>
