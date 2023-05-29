@@ -1,0 +1,163 @@
+<body data-author="freeman_lex">
+<div class="question-answer">
+    <div class="question">
+        Je n'ai aucune idée de la manière de commencer à résoudre cette mission.
+    </div>
+    <div class="answer">
+        <p>
+            💡 L'idée générale est de calculer la direction entre deux nombres adjacents, si elle n'est pas nulle (les nombres ne sont pas égaux), de la comparer à la direction précédente et si elle change, d'augmenter le compteur.
+        </p>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        Ok, par quoi dois-je commencer?
+    </div>
+    <div class="answer">
+        <p>
+            Déclarons des variables pour stocker la direction <b class="code">dir</b> et le compteur de changements - <b class="code">count</b>, que vous devrez renvoyer à la fin.
+        </p>
+        <pre class="brush: javascript">
+let dir = 0, count = 0;
+...
+return count
+        </pre>
+        <p>
+            Vous devez itérer sur le tableau initial <b class="code">elements</b>, mais pas jusqu'à la fin, puisque vous allez prendre des paires d'éléments, afin d'éviter une erreur d'indexation hors plage. Utilisez la boucle de base <a target="_blank" href="https://www.w3schools.com/js/js_loop_for.asp">for</a> et la propriété de tableau <a target="_blank" href="https://www.w3schools.com/jsref/jsref_length_array.asp">length</a>. 
+        </p>
+        <pre class="brush: javascript">
+for (let i = 0; i < elements.length - 1; i++){...}
+        </pre>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        Que dois-je faire ensuite?
+    </div>
+    <div class="answer">
+        <p>
+            Maintenant, à l'intérieur de la boucle, vous devez calculer la direction entre la paire actuelle d'éléments - les <b class="code">i</b>-th et <b class="code">i+1</b>-th.
+        </p>
+        <pre class="brush: javascript">
+let dir2 = elements[i + 1] - elements[i];
+        </pre>
+        <p>
+            Dans l'ordre croissant, vous obtenez <b class="code">dir2</b> &gt; 0 (la valeur exacte n'a pas d'importance dans ce cas), dans l'ordre décroissant - &lt; 0 et si les nombres sont égaux <b class="code">dir2</b> == 0.
+        </p>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        Je vois. Comment vérifier si la direction a changé?
+    </div>
+    <div class="answer">
+        <p>
+            En ce moment, vous avez une direction initiale <b class="code">dir</b> et une direction actuelle <b class="code">dir2</b>. Si <b class="code">dir2</b> est égal à 0 (les nombres sont égaux), cela signifie que la direction de la paire actuelle est indéfinie et reste la même que la précédente et que vous ne faites rien. 
+        </p>
+        <pre class="brush: javascript">
+if (dir2){...}
+        </pre>
+        <p>
+            Dans le cas contraire, si <b class="code">dir2</b> n'est pas égal à 0 (ce qui correspond au booléen <b class="code">true</b> et peut être une condition pour <b class="code">if</b>), vous devez vérifier si la direction a changé. Utilisez l'idée de multiplier des nombres avec des signes différents: deux "+" et "-" donnent "+" s'ils sont multipliés, "+" et "-" donnent "-".
+        </p>
+        <p>
+            Ainsi, si les directions sont différentes (de "+" - ascendant à "-" - descendant ou vice versa), leur multiplication est inférieure à 0. Vérifions donc.
+        </p>
+        <pre class="brush: javascript">
+if (dir2){
+    if (dir2 * dir < 0)
+    ...
+}
+        </pre>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        C'est une astuce! Mais je ne comprends pas comment l'utiliser.
+    </div>
+    <div class="answer">
+        <p>
+            Si la multiplication des directions est inférieure à 0, cela signifie que la direction a changé. C'est ce que vous recherchez et dans ce cas vous devez augmenter votre <b class="code">count</b>.
+        </p>
+        <pre class="brush: javascript">
+if (dir2){
+    if (dir2 * dir < 0) count++;
+    ...}
+        </pre>
+        <p>
+            Vous devez également mettre à jour votre direction de base <b class="code">dir</b> avec la direction actuelle <b class="code">dir2</b> pour l'utiliser lors de la prochaine comparaison.
+        </p>
+        <pre class="brush: javascript">
+if (dir2){
+    if (dir2 * dir < 0) count++;
+    dir = dir2;
+}
+        </pre>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        Alors, à quoi devrait ressembler ma solution finale?
+    </div>
+    <div class="answer">
+        <p>
+            Il vous suffit d'assembler tous les éléments et d'envelopper votre code dans une expression de fonction. 
+        </p>
+        <p>Voici la solution complète:</p>
+        <div class="spoiler">
+        <pre class="brush: javascript">
+function changingDirection(elements: number[]): number {
+
+    let dir = 0, count = 0;
+    for (let i = 0; i < elements.length - 1; i++){
+        let dir2 = elements[i + 1] - elements[i];
+        if (dir2){
+            if (dir2 * dir < 0) count++;
+            dir = dir2;
+        }
+    }
+    return count
+}
+        </pre>
+        </div>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        Montrez-moi d'autres solutions!<br />
+        parce que je veux être un vrai 🥇 Javascript Hero!
+    </div>
+    <div class="answer">
+        <p>Bien sûr, prenez-le!</p>
+        <p>
+            Ici vous trouvez la direction entre deux nombres adjacents et (si elle est définie et n'est pas égale à la précédente) vous l'ajoutez au tableau des directions, puis vous retournez la longueur de ce tableau - 1 puisque vous n'avez pas les directions elles-mêmes mais les moments de son changement.
+        </p>
+        <div class="spoiler">
+        <pre class="brush: javascript">
+function changingDirection(elements: number[]): number {
+
+    let dirs = [];
+    for (let i = 0; i < elements.length - 1; i++) {
+        const j = elements[i + 1];
+        if (j > elements[i] && (dirs.length === 0 || dirs.at(-1) === '-')) {
+        dirs.push('+');
+        } else if (j < elements[i] && (dirs.length === 0 || dirs.at(-1) === '+')) {
+        dirs.push('-');
+        }
+    }
+    return dirs.length - (dirs.length === 0? 0: 1);
+    }
+        </pre>
+        </div>
+        <p><b>Click "Best solutions" at mission menu and see a lot of other interesting solutions!</b></p>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        Merci! Je sais et je comprends mieux maintenant! Tout fonctionne bien!
+    </div>
+    <div class="answer">
+        👍 Heureux de l'apprendre!
+    </div>
+</div>
+</body>
