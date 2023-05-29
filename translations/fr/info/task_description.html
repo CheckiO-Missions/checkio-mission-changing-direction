@@ -1,0 +1,40 @@
+<p>
+  On vous donne {% if is_js %}un <span>tableau</span> <span>(array)</span> de <span>nombres</span> <span>(numbers)</span>{% else %} une <span>liste</span> <span>(list)</span> d'<span>entiers</span> <span>(integers)</span>{% endif %}.
+  Votre tâche dans cette mission est de trouver combien de fois le sens de tri a été modifié dans le<span>tableau</span> {% if is_js %}<span></span> <span>(array)</span><span> </span>{% else %} <span>liste</span> <span>(list)</span>{% endif %}. Si les éléments sont égaux - le sens de tri précédent reste le même, si la séquence commence par les mêmes éléments - recherchez la différence suivante pour déterminer le sens de tri.
+</p>
+<p>
+  Examinons le schéma:
+</p>
+<p style="text-align: center;">
+    <img  title="changing_dir" src="{{MEDIA}}changing_dir.png" alt="changing_dir" style="max-height: 255px"/>
+</p>
+<p>
+Il y a trois directions de tri:
+<ul>
+  <li>sur le morceau <b class="code">1, 2, 2</b> - vers le haut (croissant);</li>
+  <li>sur le bloc <b class="code">2, 1</b> - vers le bas (décroissant);</li>
+  <li>et sur le bloc <b class="code">1, 2, 2</b> - vers le haut.</li>
+</ul>
+Vous avez donc deux points de changement de la direction du tri: #1 - de haut en bas, et #2 - de bas en haut. C'est le résultat que votre fonction doit renvoyer.
+</p>
+<p>
+ <strong>Entrée:</strong> {% if is_js %}Un <span>tableau</span> <span>(array)</span> de <span>nombres</span> <span>(numbers)</span>{% else %} Une <span>liste</span> <span>(list)</span> d'<span>entiers</span> <span>(integers)</span>{% endif %}.
+</p>
+
+<p>
+ <strong>Sortie:</strong> {% if is_js %}<span>Nombre</span> <span>(Number)</span>{% else %}<span>Entier</span> <span>(Integer)</span>{% endif %}.
+</p>
+
+<div class="for_info_only">
+  <p>
+      <strong>Exemples:</strong>
+  </p>
+<pre class="brush: {% if is_js %}javascript{% else %}python{% endif %}">{{init_code_tmpl}}</pre>
+</div>
+<p>
+    <strong>Conditions préalables:</strong>
+    <ul>
+    <li><i>le<span>tableau</span> {% if is_js %}<span></span> <span>(array)</span><span> </span>{% else %} <span>liste</span> <span>(list)</span>{% endif %} est non vide;</i></li>
+    <li><i>les éléments sont des<span>nombres</span> positifs {% if is_js %} <span>(numbers)</span><span> </span>{% else %} <span>entiers</span> <span>(integers)</span>{% endif %}.</i></li>
+    </ul>
+</p>
