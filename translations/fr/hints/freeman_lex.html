@@ -1,0 +1,192 @@
+<body data-author="freeman_lex">
+<div class="question-answer">
+    <div class="question">
+        <p>Je n'ai aucune idée de la manière de commencer à résoudre cette mission.</p>
+    </div>
+    <div class="answer">
+        <p>
+            💡 Vous devez trouver et marquer dans la liste tous les morceaux dont la direction reste la même. Comme la direction change entre deux morceaux adjacents, le nombre de ces changements est le nombre de morceaux moins un.
+        </p>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        <p>Ok, par quoi dois-je commencer?</p>
+    </div>
+    <div class="answer">
+        <p>
+            La toute première étape consiste à déclarer une variable <b class="code">dirs</b> avec la valeur initiale d'une liste vide. Vous devez y stocker vos marques pour les morceaux dont la direction est restée inchangée. 
+        </p>
+        <pre class="brush: python">
+dirs = []
+        </pre>
+        <p>
+            Maintenant, pour trouver la direction (l'ordre) entre deux éléments, vous devez les comparer et répéter l'opération pour chaque paire adjacente: 0-ième avec 1-ième, 1-ième avec 2-ième, etc. Dans ce cas, la fonction intégrée <a target="_blank" href="https://www.w3schools.com/python/ref_func_zip.asp">zip()</a> est très utile! Elle permet d'itérer sur deux séquences ou plus et de prendre les éléments ayant le même indice jusqu'à la fin de la séquence la plus courte. 
+        </p>
+        <pre class="brush: python">
+dirs = []
+for i, j in zip(...):
+    ...
+        </pre>
+        <p>
+            Où <b class="code">i</b> est chaque élément de la première séquence, <b class="code">j</b> l'élément avec l'index respectif de la deuxième séquence (puisque vous comparez deux nombres, vous avez besoin de deux séquences).
+        </p>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        <p>
+            Ok, quels éléments de quelles séquences dois-je comparer?
+        </p>
+    </div>
+    <div class="answer">
+        <p>
+            Réfléchissons. Comme je l'ai dit plus haut, vous devez comparer le 0e avec le 1er, le 1er avec le 2e, le 2e avec le 3e... La première séquence commence donc au début de la liste initiale, mais la deuxième séquence commence au 1er élément de la liste initiale. 
+        </p>
+        <p>
+            Pour recevoir la deuxième séquence à comparer comme liste initiale à partir du premier élément, utilisez <a target="_blank" href="https://railsware.com/blog/python-for-machine-learning-indexing-and-slicing-for-lists-tuples-strings-and-other-sequential-types/">slicing</a>.
+        </p>
+        <pre class="brush: python">
+dirs = []
+for i, j in zip(elements, elements[1:]):
+    ...
+        </pre>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        <p>
+            Comment dois-je comparer les éléments?
+        </p>
+    </div>
+    <div class="answer">
+        <p>
+            Voici une petite remarque que vous devez garder à l'esprit. Pour cette solution, nous allons utiliser "+" pour l'ordre croissant des morceaux et "-" pour l'ordre décroissant. En réalité, vous pouvez utiliser deux symboles distincts.
+        </p>
+        <p>
+            Disons <b class="code">j > i</b>, ce qui signifie, par exemple, que le premier élément est plus grand que le zéro. Cela détermine un ordre croissant des éléments ("+"). Que devez-vous faire avec cela? S'il n'y a pas de direction stockée dans <b class="code">dirs</b> (vide: la toute première paire d'éléments est comparée ou les mêmes éléments du début de la liste initiale et l'ordre ne peut pas être déterminé) ou si la dernière direction stockée des éléments n'est pas ascendante ("-"), vous devez ajouter la nouvelle direction actuelle à <b class="code">dirs</b>, car les directions viennent de changer (ou d'être définies). 
+        </p>
+        <pre class="brush: python">
+dirs = []
+for i, j in zip(elements, elements[1:]):
+    if j > i and (not dirs or dirs[-1] == '-'):
+        dirs.append('+')
+        </pre>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        <p>
+            Que dois-je faire ensuite?
+        </p>
+    </div>
+    <div class="answer">
+        <p>
+            Complétez l'énoncé conditionnel <b class="code">if</b> avec la partie <b class="code">elif</b> et faites de même pour le sens descendant - <b class="code">j < i</b>.
+        </p>
+        <pre class="brush: python">
+dirs = []
+for i, j in zip(elements, elements[1:]):
+    if j > i and (not dirs or dirs[-1] == '-'):
+        dirs.append('+')
+    elif j < i and (not dirs or dirs[-1] == '+'):
+        dirs.append('-')
+        </pre>
+        <p>
+            Les deux comparaisons sont strictes, car si les éléments adjacents sont égaux, l'ordre reste le même (il n'est pas nécessaire d'ajouter quelques signes identiques l'un après l'autre) ou ne peut pas encore être déterminé (mêmes éléments depuis le début de la liste initiale - il n'est pas nécessaire d'ajouter de signe).
+        </p>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        <p>
+            Que doit renvoyer exactement la fonction?
+        </p>
+    </div>
+    <div class="answer">
+        <p>
+            Si <b class="code">dirs</b> reste vide (tous les éléments sont égaux) ou comporte un élément (toute la séquence initiale n'a qu'une seule direction (ascendante ou descendante)), votre fonction doit renvoyer <b class="code">0</b> - aucun changement de direction. Dans le cas contraire, votre fonction doit renvoyer le nombre de changements, qui correspond à la longueur de <b class="code">dirs</b> moins 1, comme nombre de paires adjacentes à l'intérieur de <b class="code">dirs</b>. 
+        </p>
+        <p>
+            Voici une manière abrégée d'écrire toutes ces variantes.
+        </p>
+        <pre class="brush: python">
+return len(dirs) - bool(dirs)
+        </pre>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        <p>Alors, à quoi devrait ressembler ma solution finale?</p>
+    </div>
+    <div class="answer">
+        <p>
+            Il vous suffit d'assembler le code et de l'envelopper dans une expression de fonction.
+        </p>
+        <p>Voici la solution complète:</p>
+        <div class="spoiler">
+        <pre class="brush: python">
+def changing_direction(elements: list[int]) -> int:
+
+    dirs = []
+    for i, j in zip(elements, elements[1:]):
+        if j > i and (not dirs or dirs[-1] == '-'):
+            dirs.append('+')
+        elif j < i and (not dirs or dirs[-1] == '+'):
+            dirs.append('-')
+    
+    return len(dirs) - bool(dirs)
+        </pre>
+        </div>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        <p>Montrez-moi d'autres solutions!<br />
+        parce que je veux être une vraie 🥇 Python Ninnjaa!</p>
+    </div>
+    <div class="answer">
+        <p>Bien sûr, prenez-le!</p>
+        <p>
+            Chaque fois que la direction change, le produit de la direction actuelle et de la précédente devient inférieur à 0: "+"*"-"=="-". Cette solution compte de tels produits. 
+        </p>
+        <div class="spoiler">
+        <pre class="brush: python">
+def changing_direction(elements: list[int]) -> int:
+
+    dir = count = 0
+    for a, b in zip(elements, elements[1:]):
+        dir2 = a - b
+        if dir2:
+            if dir2 * dir < 0:
+                count += 1
+            dir = dir2
+
+    return count
+        </pre>
+        </div>
+        <p>
+            Cette solution consiste à créer une liste de toutes les différences entre des éléments adjacents non égaux, à créer un générateur de produits entre des différences adjacentes de la liste précédente, à compter le nombre de produits négatifs (un signal du changement de direction). 
+        </p>
+        <div class="spoiler">
+        <pre class="brush: python">
+def changing_direction(e: list[int]) -> int:
+
+    d = [x - y for x, y in zip(e, e[1:]) if x!= y]
+
+    return sum(x * y < 0 for x, y in zip(d, d[1:]))
+        
+        </pre>
+        </div>
+        <p><b>Click "Best solutions" at mission menu and see a lot of other interesting solutions!</b></p>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        <p>Je vous remercie! Je sais et je comprends mieux maintenant! Tout fonctionne bien!</p>
+    </div>
+    <div class="answer">
+        👍 Heureux de l'apprendre!
+    </div>
+</div>
+</body>
