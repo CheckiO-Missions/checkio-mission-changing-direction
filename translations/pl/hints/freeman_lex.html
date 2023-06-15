@@ -1,0 +1,192 @@
+<body data-author="freeman_lex">
+<div class="question-answer">
+    <div class="question">
+        <p>Nie mam pojęcia, jak zacząć rozwiązywać tę misję.</p>
+    </div>
+    <div class="answer">
+        <p>
+            musi Pan znaleźć i zaznaczyć na liście wszystkie kawałki z kierunkiem, który się nie zmienia. Ponieważ kierunek zmienia się między dwoma sąsiednimi fragmentami, liczba takich zmian to liczba fragmentów minus jeden.
+        </p>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        <p>Ok, od czego powinienem zacząć?</p>
+    </div>
+    <div class="answer">
+        <p>
+            Pierwszym krokiem jest zadeklarowanie zmiennej <b class="code">dirs</b> z początkową wartością pustej listy. Tam proszę przechowywać swoje znaczniki dla chunków o pozostałym kierunku. 
+        </p>
+        <pre class="brush: python">
+dirs = []
+        </pre>
+        <p>
+            Teraz, aby znaleźć kierunek (kolejność) między dwoma elementami, należy je porównać i powtórzyć dla każdej sąsiedniej pary: 0-ty z 1-szym, 1-szy z 2-im itd. W takim przypadku wbudowana funkcja <a target="_blank" href="https://www.w3schools.com/python/ref_func_zip.asp">zip()</a> jest bardzo przydatna! Pozwala ona na iterację po dwóch lub więcej sekwencjach i pobranie elementów o tym samym indeksie do końca najkrótszej sekwencji. 
+        </p>
+        <pre class="brush: python">
+dirs = []
+for i, j in zip(...):
+    ...
+        </pre>
+        <p>
+            Gdzie <b class="code">i</b> to każdy element pierwszej sekwencji, <b class="code">j</b> element o odpowiednim indeksie z drugiej sekwencji (ponieważ porównują Państwo dwie liczby, potrzebne są dwie sekwencje).
+        </p>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        <p>
+            Ok, elementy jakich sekwencji powinienem porównać?
+        </p>
+    </div>
+    <div class="answer">
+        <p>
+            Proszę się zastanowić. Jak wspomniałem powyżej, musi Pan porównać 0-tą z 1-stą, 1-stą z 2-stą, 2-stą z 3-stą... Tak więc pierwsza sekwencja zaczyna się od początku początkowej listy, ale druga sekwencja zaczyna się od 1-stego elementu początkowej listy. 
+        </p>
+        <p>
+            Aby otrzymać drugą sekwencję do porównania jako początkową listę od pierwszego elementu, proszę użyć <a target="_blank" href="https://railsware.com/blog/python-for-machine-learning-indexing-and-slicing-for-lists-tuples-strings-and-other-sequential-types/">slicing</a>.
+        </p>
+        <pre class="brush: python">
+dirs = []
+for i, j in zip(elements, elements[1:]):
+    ...
+        </pre>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        <p>
+            Jak należy porównać elementy?
+        </p>
+    </div>
+    <div class="answer">
+        <p>
+            Oto mała uwaga, o której powinni Państwo pamiętać. W tym rozwiązaniu będziemy używać "+" dla rosnącej kolejności chunków i "-" dla malejącej. W rzeczywistości można użyć dowolnych dwóch różnych symboli.
+        </p>
+        <p>
+            Powiedzmy, że <b class="code">j> i</b>, co oznacza, że na przykład element 1 jest większy niż element 0. Określa to rosnącą kolejność elementów ("+"). Co należy z tym zrobić? Jeśli w <b class="code">dirs</b> nie ma zapisanego kierunku (pusty: porównywana jest pierwsza para elementów lub te same elementy z początku początkowej listy i nie można określić kolejności) lub ostatni zapisany kierunek elementów nie jest rosnący ("-"), należy dodać nowy bieżący kierunek do <b class="code">dirs</b>, ponieważ kierunki właśnie się zmieniły (lub ustawiły). 
+        </p>
+        <pre class="brush: python">
+dirs = []
+for i, j in zip(elements, elements[1:]):
+    if j> i and (not dirs or dirs[-1] == '-'):
+        dirs.append('+')
+        </pre>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        <p>
+            Co powinienem zrobić dalej?
+        </p>
+    </div>
+    <div class="answer">
+        <p>
+            Proszę uzupełnić instrukcję warunkową <b class="code">if</b> częścią <b class="code">elif</b> i zrobić to samo dla kierunku malejącego - <b class="code">j < i</b>.
+        </p>
+        <pre class="brush: python">
+dirs = []
+for i, j in zip(elements, elements[1:]):
+    if j> i and (not dirs or dirs[-1] == '-'):
+        dirs.append('+')
+    elif j < i and (not dirs or dirs[-1] == '+'):
+        dirs.append('-')
+        </pre>
+        <p>
+            Oba porównania są ścisłe, ponieważ jeśli sąsiednie elementy są równe, kolejność pozostaje taka sama (nie ma potrzeby dodawania kilku takich samych znaków jeden po drugim) lub nie można jej jeszcze określić (te same elementy od początku początkowej listy - nie ma potrzeby dodawania żadnego znaku).
+        </p>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        <p>
+            Co dokładnie powinna zwracać funkcja?
+        </p>
+    </div>
+    <div class="answer">
+        <p>
+            Jeśli <b class="code">dirs</b> pozostaje pusty (wszystkie elementy są równe) lub ma jeden element (cała początkowa sekwencja ma tylko jeden kierunek (asc lub desc)), Pana funkcja powinna zwrócić <b class="code">0</b> - brak zmian kierunku. W przeciwnym razie funkcja powinna zwrócić liczbę zmian, która jest długością <b class="code">dirs</b> minus 1, jako liczbę sąsiednich par wewnątrz <b class="code">dirs</b>. 
+        </p>
+        <p>
+            Oto krótki sposób zapisu wszystkich tych wariantów.
+        </p>
+        <pre class="brush: python">
+return len(dirs) - bool(dirs)
+        </pre>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        <p>Jak więc powinno wyglądać moje ostateczne rozwiązanie?</p>
+    </div>
+    <div class="answer">
+        <p>
+            Proszę tylko połączyć kod i zawinąć go w wyrażenie funkcyjne.
+        </p>
+        <p>Oto całe rozwiązanie:</p>
+        <div class="spoiler">
+        <pre class="brush: python">
+def changing_direction(elements: list[int]) -> int:
+
+    dirs = []
+    for i, j in zip(elements, elements[1:]):
+        if j> i and (not dirs or dirs[-1] == '-'):
+            dirs.append('+')
+        elif j < i and (not dirs or dirs[-1] == '+'):
+            dirs.append('-')
+    
+    return len(dirs) - bool(dirs)
+        </pre>
+        </div>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        <p>Proszę pokazać mi więcej rozwiązań!<br />
+        bo chcę być prawdziwą 🥇 Python Ninnjaa!</p>
+    </div>
+    <div class="answer">
+        <p>Jasne, proszę łapać!</p>
+        <p>
+            Za każdym razem, gdy zmienia się kierunek, iloczyn bieżącego i poprzedniego kierunku staje się mniejszy niż 0: "+"*"-"=="-". To rozwiązanie zlicza takie iloczyny. 
+        </p>
+        <div class="spoiler">
+        <pre class="brush: python">
+def changing_direction(elements: list[int]) -> int:
+
+    dir = count = 0
+    for a, b in zip(elements, elements[1:]):
+        dir2 = a - b
+        if dir2:
+            if dir2 * dir < 0:
+                count += 1
+            dir = dir2
+
+    return count
+        </pre>
+        </div>
+        <p>
+            Rozwiązanie to polega na wykonaniu następujących czynności: utworzeniu listy zawierającej wszystkie różnice między sąsiednimi nierównymi elementami, utworzeniu generatora iloczynów między sąsiednimi różnicami z poprzedniej listy, zliczeniu liczby ujemnych iloczynów (sygnał zmiany kierunku). 
+        </p>
+        <div class="spoiler">
+        <pre class="brush: python">
+def changing_direction(e: list[int]) -> int:
+
+    d = [x - y for x, y in zip(e, e[1:]) if x!= y]
+
+    return sum(x * y < 0 for x, y in zip(d, d[1:]))
+        
+        </pre>
+        </div>
+        <p>Proszę kliknąć <b>Best Solutions</b> w menu misji i zobaczyć wiele innych ciekawych rozwiązań!</p>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        <p>Dzięki! Teraz wiem i rozumiem więcej! Wszystko działa jak należy!</p>
+    </div>
+    <div class="answer">
+        miło mi to słyszeć!
+    </div>
+</div>
+</body>

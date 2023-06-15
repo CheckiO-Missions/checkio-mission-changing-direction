@@ -1,0 +1,163 @@
+<body data-author="freeman_lex">
+<div class="question-answer">
+    <div class="question">
+        Nie mam pojęcia, jak zacząć rozwiązywać tę misję.
+    </div>
+    <div class="answer">
+        <p>
+            ogólny pomysł polega na obliczeniu kierunku między każdymi dwiema sąsiednimi liczbami, jeśli jest niezerowy (liczby nie są równe), proszę porównać z poprzednim kierunkiem i jeśli się zmieni - zwiększyć licznik.
+        </p>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        Ok, od czego powinienem zacząć?
+    </div>
+    <div class="answer">
+        <p>
+            Zadeklarujmy zmienne do przechowywania kierunku <b class="code">dir</b> i licznika zmian - <b class="code">count</b>, który proszę zwrócić na koniec.
+        </p>
+        <pre class="brush: javascript">
+let dir = 0, count = 0;
+...
+return count
+        </pre>
+        <p>
+            Należy iterować po początkowym <b class="code">elements</b> nie do samego końca, ponieważ będą Państwo pobierać pary elementów, aby uniknąć błędu indeksu poza zakresem. Proszę użyć podstawowej pętli <a target="_blank" href="https://www.w3schools.com/js/js_loop_for.asp">for</a> i właściwości tablicy <a target="_blank" href="https://www.w3schools.com/jsref/jsref_length_array.asp">length</a>. 
+        </p>
+        <pre class="brush: javascript">
+for (let i = 0; i < elements.length - 1; i++){...}
+        </pre>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        Co powinienem zrobić dalej?
+    </div>
+    <div class="answer">
+        <p>
+            Teraz wewnątrz pętli należy obliczyć kierunek między bieżącą parą elementów - <b class="code">i</b>-ty i <b class="code">i+1</b>-ty.
+        </p>
+        <pre class="brush: javascript">
+let dir2 = elements[i + 1] - elements[i];
+        </pre>
+        <p>
+            W porządku rosnącym otrzymają Państwo <b class="code">dir2</b> &gt; 0 (dokładna wartość nie ma znaczenia w tym przypadku), w porządku malejącym - &lt; 0 i jeśli liczby są równe <b class="code">dir2</b> == 0.
+        </p>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        Rozumiem. Jak sprawdzić, czy kierunek się zmienił?
+    </div>
+    <div class="answer">
+        <p>
+            W tym momencie ma Pan początkowy kierunek <b class="code">dir</b> i aktualny <b class="code">dir2</b>. Jeśli <b class="code">dir2</b> równa się 0 (liczby są równe), oznacza to, że kierunek bieżącej pary jest niezdefiniowany i pozostaje taki sam jak poprzedni, a Pan nic nie robi. 
+        </p>
+        <pre class="brush: javascript">
+if (dir2){...}
+        </pre>
+        <p>
+            W przeciwnym razie - jeśli <b class="code">dir2</b> nie jest równe 0 (co jest wartością logiczną <b class="code">true</b> i może być warunkiem dla <b class="code">if</b>), należy sprawdzić, czy kierunek się zmienił. Proszę skorzystać z pomysłu mnożenia liczb z różnymi znakami: dwa "+" i "-" dają "+" po pomnożeniu, "+" i "-" dają "-".
+        </p>
+        <p>
+            Tak więc, jeśli kierunki są różne (od "+" - rosnąco do "-" - malejąco lub odwrotnie), ich iloczyn jest mniejszy niż 0. Sprawdźmy to.
+        </p>
+        <pre class="brush: javascript">
+if (dir2){
+    if (dir2 * dir < 0)
+    ...
+}
+        </pre>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        To jest sztuczka! Ale nie rozumiem, jak go użyć.
+    </div>
+    <div class="answer">
+        <p>
+            Jeśli mnożenie kierunków jest mniejsze niż 0, oznacza to, że kierunek się zmienił. Tego właśnie Pan szuka i w tym przypadku musi Pan zwiększyć <b class="code">count</b>.
+        </p>
+        <pre class="brush: javascript">
+if (dir2){
+    if (dir2 * dir < 0) count++;
+    ...}
+        </pre>
+        <p>
+            Należy również zaktualizować kierunek bazowy <b class="code">dir</b> z bieżącym <b class="code">dir2</b>, aby użyć go w następnym porównaniu.
+        </p>
+        <pre class="brush: javascript">
+if (dir2){
+    if (dir2 * dir < 0) count++;
+    dir = dir2;
+}
+        </pre>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        Jak więc powinno wyglądać moje ostateczne rozwiązanie?
+    </div>
+    <div class="answer">
+        <p>
+            Wystarczy połączyć wszystkie elementy i zawinąć kod w wyrażenie funkcyjne. 
+        </p>
+        <p>Oto całe rozwiązanie:</p>
+        <div class="spoiler">
+        <pre class="brush: javascript">
+function changingDirection(elements: number[]): number {
+
+    let dir = 0, count = 0;
+    for (let i = 0; i < elements.length - 1; i++){
+        let dir2 = elements[i + 1] - elements[i];
+        if (dir2){
+            if (dir2 * dir < 0) count++;
+            dir = dir2;
+        }
+    }
+    return count
+}
+        </pre>
+        </div>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        Proszę pokazać mi więcej rozwiązań!<br />
+        bo chcę być prawdziwym 🥇 bohaterem Javascript!
+    </div>
+    <div class="answer">
+        <p>Jasne, proszę pobrać!</p>
+        <p>
+            Tutaj proszę znaleźć kierunek pomiędzy każdymi dwoma sąsiadującymi liczbami i (jeśli jest zdefiniowany i nie jest równy poprzedniemu) dodać go do tablicy kierunków, a następnie zwrócić długość tej tablicy - 1, ponieważ nie chodzi o sam kierunek, ale o momenty jego zmiany.
+        </p>
+        <div class="spoiler">
+        <pre class="brush: javascript">
+function changingDirection(elements: number[]): number {
+
+    let dirs = [];
+    for (let i = 0; i < elements.length - 1; i++) {
+        const j = elements[i + 1];
+        if (j> elements[i] && (dirs.length === 0 || dirs.at(-1) === '-')) {
+        dirs.push('+');
+        } else if (j < elements[i] && (dirs.length === 0 || dirs.at(-1) === '+')) {
+        dirs.push('-');
+        }
+    }
+    return dirs.length - (dirs.length === 0? 0: 1);
+    }
+        </pre>
+        </div>
+        <p>Proszę kliknąć <b>Best Solutions</b> w menu misji i zobaczyć wiele innych ciekawych rozwiązań!</p>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        Dzięki! Teraz wiem i rozumiem więcej! Wszystko działa jak należy!
+    </div>
+    <div class="answer">
+        miło mi to słyszeć!
+    </div>
+</div>
+</body>

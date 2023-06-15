@@ -1,0 +1,39 @@
+<p>
+  Otrzymują Państwo ciąg liczb całkowitych. Państwa zadaniem w tej misji jest znalezienie, ile razy kierunek sortowania został zmieniony w podanym ciągu. Jeśli elementy są równe - poprzedni kierunek sortowania pozostaje taki sam, jeśli sekwencja zaczyna się od tych samych elementów - proszę poszukać kolejnego innego, aby określić kierunek sortowania.
+</p>
+<p>
+  Proszę spojrzeć na schemat:
+</p>
+<p style="text-align: center;">
+    <img  title="changing_dir" src="{{MEDIA}}changing_dir.png" alt="changing_dir" style="max-height: 255px"/>
+</p>
+<p>
+Istnieją trzy kierunki sortowania:
+<ul>
+  <li>na chunk <b class="code">1, 2, 2</b> - w górę (rosnąco);</li>
+  <li>na fragmencie <b class="code">2, 1</b> - w dół (malejąco);</li>
+  <li>i na chunk <b class="code">1, 2, 2</b> - ponownie w górę.</li>
+</ul>
+Mają więc Państwo dwa punkty zmiany kierunku sortowania: #1 - z góry na dół i #2 - z dołu do góry. Taki wynik powinna zwrócić Pana funkcja.
+</p>
+<p>
+ <strong>Dane wejściowe:</strong> {% if is_js %}Tablica{% else %}Lista{% endif %} <span>({% if is_js %}Array{% else %}List{% endif %})</span> liczb całkowitych <span>{% if is_js %}(number){% else %}(int){% endif %}</span>.
+</p>
+
+<p>
+ <strong>Dane wyjściowe:</strong> Liczba całkowita <span>{% if is_js %}(number){% else %}(int){% endif %}</span>.
+</p>
+
+<div class="for_info_only">
+  <p>
+      <strong>Przykłady:</strong>
+  </p>
+<pre class="brush: {% if is_js %}javascript{% else %}python{% endif %}">{{init_code_tmpl}}</pre>
+</div>
+<p>
+    <strong>Warunki wstępne:</strong>
+    <ul>
+    <li><i>sekwencja jest niepusta;</i></li>
+    <li><i>elementy są dodatnimi liczbami całkowitymi.</i></li>
+    </ul>
+</p>
