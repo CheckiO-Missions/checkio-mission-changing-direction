@@ -1,6 +1,5 @@
 <p>
-  You are given {% if is_js %}an <span translate="repeat">array</span> of <span translate="repeat">numbers</span>{% else %}a <span translate="repeat">list</span> of <span translate="repeat">integers</span>{% endif %}.
-  Your task in this mission is to find, how many times the sorting direction was changed in the given {% if is_js %}<span translate="repeat">array</span>{% else %}<span translate="repeat">list</span>{% endif %}. If the elements are equal - the previous sorting direction remains the same, if the sequence starts from the same elements - look for the next different to determine the sorting direction.
+  You are given a sequence of integers. Your task in this mission is to find, how many times the sorting direction was changed in the given sequence. If the elements are equal - the previous sorting direction remains the same, if the sequence starts from the same elements - look for the next different to determine the sorting direction.
 </p>
 <p>
   Let's look at the scheme:
@@ -18,11 +17,11 @@ There are three sorting directions:
 So, you have two points of changing the sorting direction: #1 - from up to down, and #2 - from down to up. That's the result your function should return.
 </p>
 <p>
-  <strong>Input:</strong> {% if is_js %}An <span translate="repeat">array</span> of <span translate="repeat">numbers</span>{% else %}A <span translate="repeat">list</span> of <span translate="repeat">integers</span>{% endif %}.
+  <strong>Input:</strong> <span translate="repeat">{% if is_js %}Array{% else %}List{% endif %}</span> of integers <span translate="no">{% if is_js %}(number){% else %}(int){% endif %}</span>.
 </p>
 
 <p>
-  <strong>Output:</strong> {% if is_js %}<span translate="repeat">Number</span>{% else %}<span translate="repeat">Integer</span>{% endif %}.
+  <strong>Output:</strong> An integer <span translate="no">{% if is_js %}(number){% else %}(int){% endif %}</span>.
 </p>
 
 <div class="for_info_only">
@@ -34,7 +33,7 @@ So, you have two points of changing the sorting direction: #1 - from up to down,
 <p>
     <strong>Preconditions:</strong>
     <ul>
-    <li><i>the {% if is_js %}<span translate="repeat">array</span>{% else %}<span translate="repeat">list</span>{% endif %} is non-empty;</i></li>
-    <li><i>the elements are positive {% if is_js %}<span translate="repeat">numbers</span>{% else %}<span translate="repeat">integers</span>{% endif %}.</i></li>
+    <li><i>the sequence is non-empty;</i></li>
+    <li><i>the elements are positive integers.</i></li>
     </ul>
 </p>
