@@ -1,0 +1,39 @@
+<p>
+  给您一个整数序列。在这个任务中您的任务是找出在给定的序列中排序方向改变了多少次。如果元素相等，则之前的排序方向保持不变，如果序列从相同元素开始，则寻找下一个不同的元素来确定排序方向。
+</p>
+<p>
+  让我们来看看这个方案：
+</p>
+<p style="text-align: center;">
+    <img  title="changing_dir" src="{{MEDIA}}changing_dir.png" alt="changing_dir" style="max-height: 255px"/>
+</p>
+<p>
+有三个排序方向：
+<ul>
+  <li>在大块<b class="code">1, 2, 2</b> - 上（递增）；</li>
+  <li><b class="code">2, 1</b> - 向下（递减）；</li>
+  <li><b class="code">1, 2, 2</b> --再次向上。</li>
+</ul>
+因此，您有两个改变排序方向的点：#1 - 从上到下，#2 - 从下到上。这就是您的函数应该返回的结果。
+</p>
+<p>
+ <strong>输入</strong> {% if is_js %}数组{% else %}列表{% endif %} <span>({% if is_js %}Array{% else %}List{% endif %})</span>的整数 <span>{% if is_js %}(number){% else %}(int){% endif %}</span>.
+</p>
+
+<p>
+ <strong>输出：</strong>一个整数 <span>{% if is_js %}(number){% else %}(int){% endif %}</span>.
+</p>
+
+<div class="for_info_only">
+  <p>
+      <strong>示例：</strong>
+  </p>
+<pre class="brush: {% if is_js %}javascript{% else %}python{% endif %}">{{init_code_tmpl}}</pre>
+</div>
+<p>
+    <strong>前提条件：</strong>
+    <ul>
+    <li><i>序列非空；</i></li>
+    <li><i>元素为正整数。</i></li>
+    </ul>
+</p>

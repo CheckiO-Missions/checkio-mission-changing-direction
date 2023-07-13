@@ -1,0 +1,192 @@
+<body data-author="freeman_lex">
+<div class="question-answer">
+    <div class="question">
+        <p>我不知道如何开始解决这项任务。</p>
+    </div>
+    <div class="answer">
+        <p>
+            💡 您需要在列表中找到并标记所有方向不变的大块。由于相邻的两个数据块之间的方向是变化的，因此这种变化的数量是数据块的数量减一。
+        </p>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        <p>好的，我应该从哪里开始呢？</p>
+    </div>
+    <div class="answer">
+        <p>
+            第一步是声明一个初始值为空列表的变量<b class="code">dirs</b> 。您应该在这里存储剩余方向的大块的标记。 
+        </p>
+        <pre class="brush: python">
+dirs = []
+        </pre>
+        <p>
+            现在，为了找到两个元素之间的方向（顺序），您需要比较它们，并重复每一对相邻元素：0-th与1-st，1-st与2-nd等等。对于这种情况，<a target="_blank" href="https://www.w3schools.com/python/ref_func_zip.asp">zip()</a> 内置函数非常有用！它可以遍历两个或多个序列，并提取具有相同索引的元素，直到最短序列结束。 
+        </p>
+        <pre class="brush: python">
+dirs = []
+for i, j in zip(...):
+    ...
+        </pre>
+        <p>
+            其中<b class="code">i</b> 是第一个序列中的每个元素，<b class="code">j</b> 是第二个序列中具有相应索引的元素（因为比较两个数需要两个序列）。
+        </p>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        <p>
+            好的，我应该比较哪些序列的元素？
+        </p>
+    </div>
+    <div class="answer">
+        <p>
+            让我们想想。如上所述，您需要比较0-th和1-st，1-st和2-nd，2-nd和3-rd......所以第一个序列从初始列表的开头开始，而第二个序列从初始列表的第1个元素开始。 
+        </p>
+        <p>
+            要从第一个元素开始接收第二个序列作为初始列表进行比较，请使用<a target="_blank" href="https://railsware.com/blog/python-for-machine-learning-indexing-and-slicing-for-lists-tuples-strings-and-other-sequential-types/">slicing</a> 。
+        </p>
+        <pre class="brush: python">
+dirs = []
+for i, j in zip(elements, elements[1:]):
+    ...
+        </pre>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        <p>
+            我应该如何比较元素？
+        </p>
+    </div>
+    <div class="answer">
+        <p>
+            这里有一个小说明，您应该记住。在本方案中，我们将使用 "+"表示大块的升序，"-"表示降序。实际上，您可以使用任何两个不同的符号。
+        </p>
+        <p>
+            比方说，<b class="code">j> i</b> ，这意味着，例如，第1个元素比第0个元素大。它决定了元素的升序（"+"）。您应该如何处理呢？如果在<b class="code">dirs</b> 中没有存储方向（空：比较的第一对元素或初始列表开头的相同元素，无法确定顺序），或者最后存储的元素方向不是升序（"-"），您应该添加新的当前方向到<b class="code">dirs</b> ，因为方向刚刚改变（或设置）。 
+        </p>
+        <pre class="brush: python">
+dirs = []
+for i, j in zip(elements, elements[1:]):
+    if j> i and (not dirs or dirs[-1] == '-'):
+        dirs.append('+')
+        </pre>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        <p>
+            下一步我应该做什么？
+        </p>
+    </div>
+    <div class="answer">
+        <p>
+            用<b class="code">elif</b> 部分对条件语句<b class="code">if</b> 进行补充，并对降序方向做同样的处理 -<b class="code">j < i</b> 。
+        </p>
+        <pre class="brush: python">
+dirs = []
+for i, j in zip(elements, elements[1:]):
+    if j> i and (not dirs or dirs[-1] == '-'):
+        dirs.append('+')
+    elif j < i and (not dirs or dirs[-1] == '+'):
+        dirs.append('-')
+        </pre>
+        <p>
+            这两种比较都是严格的，因为如果相邻的元素相等，则顺序保持不变（不需要一个接一个地添加几个相同的符号）或者还不能确定（从初始列表开始的元素相同--不需要添加任何符号）。
+        </p>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        <p>
+            函数到底应该返回什么？
+        </p>
+    </div>
+    <div class="answer">
+        <p>
+            如果<b class="code">dirs</b> 仍然为空（所有元素相等）或只有一个元素（所有初始序列只有一个方向（asc 或 desc）），函数应该返回<b class="code">0</b> - 没有方向变化。否则，您的函数应该返回变化的个数，即<b class="code">dirs</b> 的长度减去 1，作为<b class="code">dirs</b> 中相邻数对的个数。 
+        </p>
+        <p>
+            下面是所有这些变量的简短写法。
+        </p>
+        <pre class="brush: python">
+return len(dirs) - bool(dirs)
+        </pre>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        <p>那么，我的最终解决方案应该是怎样的呢？</p>
+    </div>
+    <div class="answer">
+        <p>
+            您只需将代码连接起来，并将其封装为函数表达式。
+        </p>
+        <p>这就是整个解决方案：</p>
+        <div class="spoiler">
+        <pre class="brush: python">
+def changing_direction(elements: list[int]) -> int:
+
+    dirs = []
+    for i, j in zip(elements, elements[1:]):
+        if j> i and (not dirs or dirs[-1] == '-'):
+            dirs.append('+')
+        elif j < i and (not dirs or dirs[-1] == '+'):
+            dirs.append('-')
+    
+    return len(dirs) - bool(dirs)
+        </pre>
+        </div>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        <p>告诉我更多的解决方案！<br />
+        因为我想成为一个真正的 🥇 Python Ninnjaa！</p>
+    </div>
+    <div class="answer">
+        <p>当然，抓住它！</p>
+        <p>
+            每当方向改变时，当前方向与前一个方向的乘积小于0："+"*"-"=="-"。这个解决方案计算这样的乘积。 
+        </p>
+        <div class="spoiler">
+        <pre class="brush: python">
+def changing_direction(elements: list[int]) -> int:
+
+    dir = count = 0
+    for a, b in zip(elements, elements[1:]):
+        dir2 = a - b
+        if dir2:
+            if dir2 * dir < 0:
+                count += 1
+            dir = dir2
+
+    return count
+        </pre>
+        </div>
+        <p>
+            该方案的具体做法如下：创建一个包含所有相邻非相等元素之间差值的列表，从上一个列表中创建一个相邻差值之间乘积的生成器，计算负乘积的数量（方向改变的信号）。 
+        </p>
+        <div class="spoiler">
+        <pre class="brush: python">
+def changing_direction(e: list[int]) -> int:
+
+    d = [x - y for x, y in zip(e, e[1:]) if x!= y]
+
+    return sum(x * y < 0 for x, y in zip(d, d[1:]))
+        
+        </pre>
+        </div>
+        <p>点击任务菜单<b>Best Solutions</b> ，查看更多有趣的解决方案！</p>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        <p>谢谢！我现在知道并理解得更多了！一切正常！</p>
+    </div>
+    <div class="answer">
+        很高兴听到这个消息！
+    </div>
+</div>
+</body>
