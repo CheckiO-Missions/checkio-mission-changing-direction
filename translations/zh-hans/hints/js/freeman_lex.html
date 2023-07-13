@@ -1,0 +1,163 @@
+<body data-author="freeman_lex">
+<div class="question-answer">
+    <div class="question">
+        我不知道如何开始解决这项任务。
+    </div>
+    <div class="answer">
+        <p>
+            💡 总体思路是计算每两个相邻数字之间的方向，如果方向不为零（数字不相等），则与之前的方向进行比较，如果方向发生变化，则增加计数器。
+        </p>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        好的，我应该从什么开始呢？
+    </div>
+    <div class="answer">
+        <p>
+            让我们声明变量来存储方向<b class="code">dir</b> 和变化的计数器 -<b class="code">count</b> ，你应该在最后返回它。
+        </p>
+        <pre class="brush: javascript">
+let dir = 0, count = 0;
+...
+return count
+        </pre>
+        <p>
+            你应该遍历初始<b class="code">elements</b> ，而不是遍历到最后，因为你要获取成对的元素，以避免索引超出范围的错误。使用基本的<a target="_blank" href="https://www.w3schools.com/js/js_loop_for.asp">for</a> 循环和数组<a target="_blank" href="https://www.w3schools.com/jsref/jsref_length_array.asp">length</a> 属性。 
+        </p>
+        <pre class="brush: javascript">
+for (let i = 0; i < elements.length - 1; i++){...}
+        </pre>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        下一步我应该做什么？
+    </div>
+    <div class="answer">
+        <p>
+            现在，在循环内部，您应该计算当前元素对（<b class="code">i</b>-th和<b class="code">i+1</b>-th）之间的方向。
+        </p>
+        <pre class="brush: javascript">
+let dir2 = elements[i + 1] - elements[i];
+        </pre>
+        <p>
+            如果是升序，您将得到<b class="code">dir2</b> &gt; 0（在这种情况下精确值并不重要），如果是降序 - &lt; 0，如果数字相等，<b class="code">dir2</b> == 0。
+        </p>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        我明白了。如何检查方向是否改变？
+    </div>
+    <div class="answer">
+        <p>
+            此时，您有一个初始方向<b class="code">dir</b> 和当前方向<b class="code">dir2</b> 。如果<b class="code">dir2</b> 等于0（数字相等），这意味着当前线对的方向未定义，与之前的方向相同，您什么也不用做。 
+        </p>
+        <pre class="brush: javascript">
+if (dir2){...}
+        </pre>
+        <p>
+            否则，如果<b class="code">dir2</b> 不等于 0（这是布尔值<b class="code">true</b> ，可能是<b class="code">if</b> 的条件），则应检查方向是否改变。使用不同符号数字相乘的思想：两个 "+"和"-"相乘得到 "+"，"+"和"-"相乘得到"-"。
+        </p>
+        <p>
+            因此，如果方向不同（从 "+"-上升到"-"-下降或相反），它们的乘积小于0。
+        </p>
+        <pre class="brush: javascript">
+if (dir2){
+    if (dir2 * dir < 0)
+    ...
+}
+        </pre>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        这是一个技巧！但我不知道如何使用它。
+    </div>
+    <div class="answer">
+        <p>
+            如果方向乘积小于0，说明方向改变了。这就是您要寻找的，在这种情况下，您必须增加<b class="code">count</b> 。
+        </p>
+        <pre class="brush: javascript">
+if (dir2){
+    if (dir2 * dir < 0) count++;
+    ...}
+        </pre>
+        <p>
+            您还应该用当前的<b class="code">dir2</b> 更新您的基本方向<b class="code">dir</b> ，以便在下一次比较中使用。
+        </p>
+        <pre class="brush: javascript">
+if (dir2){
+    if (dir2 * dir < 0) count++;
+    dir = dir2;
+}
+        </pre>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        那么，我的最终解决方案应该是怎样的呢？
+    </div>
+    <div class="answer">
+        <p>
+            您只需将所有代码连接在一起并封装成函数表达式。 
+        </p>
+        <p>以下是整个解决方案：</p>
+        <div class="spoiler">
+        <pre class="brush: javascript">
+function changingDirection(elements: number[]): number {
+
+    let dir = 0, count = 0;
+    for (let i = 0; i < elements.length - 1; i++){
+        let dir2 = elements[i + 1] - elements[i];
+        if (dir2){
+            if (dir2 * dir < 0) count++;
+            dir = dir2;
+        }
+    }
+    return count
+}
+        </pre>
+        </div>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        告诉我更多的解决方案！<br />
+        因为我想成为一个真正的 🥇 Javascript 英雄！
+    </div>
+    <div class="answer">
+        <p>当然，抓住它！</p>
+        <p>
+            在这里，你找到每两个相邻数字之间的方向，并（如果它被定义并且不等于前一个）将其添加到方向数组中，然后返回该数组的长度 - 1，因为你不是方向本身，而是其变化的时刻。
+        </p>
+        <div class="spoiler">
+        <pre class="brush: javascript">
+function changingDirection(elements: number[]): number {
+
+    let dirs = [];
+    for (let i = 0; i < elements.length - 1; i++) {
+        const j = elements[i + 1];
+        if (j> elements[i] && (dirs.length === 0 || dirs.at(-1) === '-')) {
+        dirs.push('+');
+        } else if (j < elements[i] && (dirs.length === 0 || dirs.at(-1) === '+')) {
+        dirs.push('-');
+        }
+    }
+    return dirs.length - (dirs.length === 0? 0: 1);
+    }
+        </pre>
+        </div>
+        <p>点击任务菜单中的<b>Best Solutions</b> 查看更多有趣的解决方案！</p>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        谢谢！我现在知道并理解了更多！一切正常！
+    </div>
+    <div class="answer">
+        很高兴听到这个消息！
+    </div>
+</div>
+</body>
