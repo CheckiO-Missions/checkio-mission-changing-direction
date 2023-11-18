@@ -1,0 +1,40 @@
+<img src="{{MEDIA_CONVERT}}title.png" class="title_img" />
+<p>
+  Sie erhalten eine Folge von ganzen Zahlen. Ihre Aufgabe bei dieser Mission ist es, herauszufinden, wie oft die Sortierrichtung in der gegebenen Folge geändert wurde. Wenn die Elemente gleich sind - bleibt die vorherige Sortierrichtung gleich, wenn die Folge von denselben Elementen ausgeht - suchen Sie nach dem nächsten Unterschied, um die Sortierrichtung zu bestimmen.
+</p>
+<p>
+  Schauen wir uns das Schema an:
+</p>
+<p style="text-align: center;">
+    <img  title="changing_dir" src="{{MEDIA}}changing_dir.png" alt="changing_dir" style="max-height: 255px"/>
+</p>
+<p>
+Es gibt drei Sortierrichtungen:
+<ul>
+  <li>auf dem Chunk <b class="code">1, 2, 2</b> - nach oben (aufsteigend);</li>
+  <li>auf dem Chunk <b class="code">2, 1</b> - abwärts (abnehmend);</li>
+  <li>und auf dem Chunk <b class="code">1, 2, 2</b> - wieder nach oben.</li>
+</ul>
+Sie haben also zwei Punkte, an denen Sie die Sortierrichtung ändern können: #1 - von oben nach unten, und #2 - von unten nach oben. Das ist das Ergebnis, das Ihre Funktion zurückgeben sollte.
+</p>
+<p>
+ <strong>Eingabe:</strong> {% if is_js %}Array{% else %}Liste{% endif %} <span>({% if is_js %}Array{% else %}List{% endif %})</span> von ganzen Zahlen <span>{% if is_js %}(number){% else %}(int){% endif %}</span>.
+</p>
+
+<p>
+ <strong>Ausgabe:</strong> Eine ganze Zahl <span>{% if is_js %}(number){% else %}(int){% endif %}</span>.
+</p>
+
+<div class="for_info_only">
+  <p>
+      <strong>Beispiele:</strong>
+  </p>
+<pre class="brush: {% if is_js %}javascript{% else %}python{% endif %}">{{init_code_tmpl}}</pre>
+</div>
+<p>
+    <strong>Vorbedingungen:</strong>
+    <ul>
+    <li><i>die Folge ist nicht leer;</i></li>
+    <li><i>die Elemente sind positive ganze Zahlen.</i></li>
+    </ul>
+</p>
