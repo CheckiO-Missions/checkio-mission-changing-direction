@@ -1,0 +1,192 @@
+<body data-author="freeman_lex">
+<div class="question-answer">
+    <div class="question">
+        <p>Ich habe keine Ahnung, wie ich mit der Lösung dieser Aufgabe beginnen soll.</p>
+    </div>
+    <div class="answer">
+        <p>
+            💡 Sie müssen alle Chunks mit gleichbleibender Richtung in der Liste finden und markieren. Da sich die Richtung zwischen zwei benachbarten Chunks ändert, ist die Anzahl solcher Änderungen die Anzahl der Chunks minus eins.
+        </p>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        <p>Ok, womit soll ich beginnen?</p>
+    </div>
+    <div class="answer">
+        <p>
+            Der allererste Schritt besteht darin, eine Variable <b class="code">dirs</b> mit dem Anfangswert einer leeren Liste zu deklarieren. Dort sollten Sie Ihre Markierungen für die Chunks mit der verbleibenden Richtung speichern. 
+        </p>
+        <pre class="brush: python">
+dirs = []
+        </pre>
+        <p>
+            Um nun die Richtung (Reihenfolge) zwischen zwei Elementen zu ermitteln, müssen Sie diese vergleichen und für jedes benachbarte Paar wiederholen: 0-ter mit 1-st, 1-st mit 2-ter usw. Für diesen Fall ist die integrierte Funktion <a target="_blank" href="https://www.w3schools.com/python/ref_func_zip.asp">zip()</a> sehr nützlich! Sie ermöglicht es, über zwei oder mehr Sequenzen zu iterieren und Elemente mit demselben Index bis zum Ende der kürzesten Sequenz zu nehmen. 
+        </p>
+        <pre class="brush: python">
+dirs = []
+for i, j in zip(...):
+    ...
+        </pre>
+        <p>
+            Dabei ist <b class="code">i</b> jedes Element der ersten Sequenz, <b class="code">j</b> das Element mit dem entsprechenden Index aus der zweiten Sequenz (da Sie zwei Zahlen vergleichen, benötigen Sie zwei Sequenzen).
+        </p>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        <p>
+            Ok, welche Elemente aus welchen Sequenzen soll ich vergleichen?
+        </p>
+    </div>
+    <div class="answer">
+        <p>
+            Lassen Sie uns nachdenken. Wie ich bereits sagte, müssen Sie die 0. mit der 1. vergleichen, die 1. mit der 2., die 2. mit der 3... Die erste Sequenz beginnt also am Anfang der ursprünglichen Liste, aber die zweite Sequenz beginnt mit dem Element 1 der ursprünglichen Liste. 
+        </p>
+        <p>
+            Um die zweite Folge zum Vergleich als Ausgangsliste ab dem ersten Element zu erhalten, verwenden Sie <a target="_blank" href="https://railsware.com/blog/python-for-machine-learning-indexing-and-slicing-for-lists-tuples-strings-and-other-sequential-types/">slicing</a>.
+        </p>
+        <pre class="brush: python">
+dirs = []
+for i, j in zip(elements, elements[1:]):
+    ...
+        </pre>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        <p>
+            Wie soll ich die Elemente vergleichen?
+        </p>
+    </div>
+    <div class="answer">
+        <p>
+            Hier ist eine kleine Anmerkung, die Sie beachten sollten. In dieser Lösung verwenden wir "+" für die aufsteigende Reihenfolge der Chunks und "-" für die absteigende. Sie können aber auch zwei beliebige andere Symbole verwenden.
+        </p>
+        <p>
+            Sagen wir <b class="code">j> i</b>, was bedeutet, dass zum Beispiel das 1. Element größer ist als das 0-te. Es bestimmt eine aufsteigende Reihenfolge der Elemente ("+"). Was sollten Sie damit tun? Wenn es keine gespeicherte Richtung in <b class="code">dirs</b> gibt (leer: das allererste Paar von Elementen wird verglichen oder die gleichen Elemente vom Anfang der ursprünglichen Liste und die Reihenfolge kann nicht bestimmt werden) oder die letzte gespeicherte Richtung der Elemente nicht aufsteigend ist ("-"), sollten Sie die neue aktuelle Richtung zu <b class="code">dirs</b> hinzufügen, da die Richtungen gerade geändert (oder festgelegt) wurden. 
+        </p>
+        <pre class="brush: python">
+dirs = []
+for i, j in zip(elements, elements[1:]):
+    if j> i and (not dirs or dirs[-1] == '-'):
+        dirs.append('+')
+        </pre>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        <p>
+            Was sollte ich als nächstes tun?
+        </p>
+    </div>
+    <div class="answer">
+        <p>
+            Ergänzen Sie die bedingte Anweisung <b class="code">if</b> mit dem Teil <b class="code">elif</b> und machen Sie dasselbe für die absteigende Richtung - <b class="code">j < i</b>.
+        </p>
+        <pre class="brush: python">
+dirs = []
+for i, j in zip(elements, elements[1:]):
+    if j> i and (not dirs or dirs[-1] == '-'):
+        dirs.append('+')
+    elif j < i and (not dirs or dirs[-1] == '+'):
+        dirs.append('-')
+        </pre>
+        <p>
+            Beide Vergleiche sind strikt, denn wenn die benachbarten Elemente gleich sind, bleibt die Reihenfolge gleich (keine Notwendigkeit, ein paar gleiche Zeichen nacheinander hinzuzufügen) oder kann noch nicht bestimmt werden (gleiche Elemente vom Anfang der ursprünglichen Liste - keine Notwendigkeit, irgendein Zeichen hinzuzufügen).
+        </p>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        <p>
+            Was genau soll die Funktion zurückgeben?
+        </p>
+    </div>
+    <div class="answer">
+        <p>
+            Wenn <b class="code">dirs</b> leer bleibt (alle Elemente sind gleich) oder ein Element hat (alle Anfangssequenzen haben nur eine Richtung (auf- oder absteigend)), sollte Ihre Funktion <b class="code">0</b> zurückgeben - keine Richtungsänderungen. Andernfalls sollte Ihre Funktion die Anzahl der Richtungswechsel zurückgeben, d.h. die Länge von <b class="code">dirs</b> minus 1, als die Anzahl der benachbarten Paare innerhalb von <b class="code">dirs</b>. 
+        </p>
+        <p>
+            Hier ist eine kurze Schreibweise für alle diese Varianten.
+        </p>
+        <pre class="brush: python">
+return len(dirs) - bool(dirs)
+        </pre>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        <p>Wie sollte also meine endgültige Lösung aussehen?</p>
+    </div>
+    <div class="answer">
+        <p>
+            Sie müssen nur den Code zusammenfügen und ihn in einen Funktionsausdruck einpacken.
+        </p>
+        <p>Hier ist die gesamte Lösung:</p>
+        <div class="spoiler">
+        <pre class="brush: python">
+def changing_direction(elements: list[int]) -> int:
+
+    dirs = []
+    for i, j in zip(elements, elements[1:]):
+        if j> i and (not dirs or dirs[-1] == '-'):
+            dirs.append('+')
+        elif j < i and (not dirs or dirs[-1] == '+'):
+            dirs.append('-')
+    
+    return len(dirs) - bool(dirs)
+        </pre>
+        </div>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        <p>Zeigen Sie mir mehr Lösungen!<br />
+        denn ich will ein echter 🥇 Python-Ninjaa sein!</p>
+    </div>
+    <div class="answer">
+        <p>Klar, schnapp sie dir!</p>
+        <p>
+            Jedes Mal, wenn sich die Richtung ändert, wird das Produkt aus aktueller Richtung und vorheriger Richtung kleiner als 0: "+"*"-"=="-". Diese Lösung zählt solche Produkte. 
+        </p>
+        <div class="spoiler">
+        <pre class="brush: python">
+def changing_direction(elements: list[int]) -> int:
+
+    dir = count = 0
+    for a, b in zip(elements, elements[1:]):
+        dir2 = a - b
+        if dir2:
+            if dir2 * dir < 0:
+                count += 1
+            dir = dir2
+
+    return count
+        </pre>
+        </div>
+        <p>
+            Diese Lösung geht folgendermaßen vor: Erstellen Sie eine Liste mit allen Differenzen zwischen benachbarten ungleichen Elementen, erstellen Sie einen Generator von Produkten zwischen benachbarten Differenzen aus der vorherigen Liste, zählen Sie die Anzahl der negativen Produkte (ein Signal für den Richtungswechsel). 
+        </p>
+        <div class="spoiler">
+        <pre class="brush: python">
+def changing_direction(e: list[int]) -> int:
+
+    d = [x - y for x, y in zip(e, e[1:]) if x!= y]
+
+    return sum(x * y < 0 for x, y in zip(d, d[1:]))
+        
+        </pre>
+        </div>
+        <p>Klicken Sie auf <b>Best Solutions</b> im Menü Mission und sehen Sie sich viele andere interessante Lösungen an!</p>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        <p>Vielen Dank! Ich weiß und verstehe jetzt mehr! Alles funktioniert einwandfrei!</p>
+    </div>
+    <div class="answer">
+        👍 Freut mich zu hören!
+    </div>
+</div>
+</body>
