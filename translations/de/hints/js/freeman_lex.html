@@ -1,0 +1,163 @@
+<body data-author="freeman_lex">
+<div class="question-answer">
+    <div class="question">
+        Ich habe keine Ahnung, wie ich mit der Lösung dieser Aufgabe beginnen soll.
+    </div>
+    <div class="answer">
+        <p>
+            die allgemeine Idee ist, die Richtung zwischen zwei benachbarten Zahlen zu berechnen. Wenn sie ungleich Null ist (die Zahlen sind nicht gleich), vergleichen Sie sie mit der vorherigen Richtung und wenn sie sich ändert, erhöhen Sie den Zähler.
+        </p>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        Ok, womit soll ich anfangen?
+    </div>
+    <div class="answer">
+        <p>
+            Lassen Sie uns Variablen deklarieren, um die Richtung <b class="code">dir</b> und den Zähler der Änderungen zu speichern - <b class="code">count</b>, den Sie am Ende zurückgeben sollten.
+        </p>
+        <pre class="brush: javascript">
+let dir = 0, count = 0;
+...
+return count
+        </pre>
+        <p>
+            Sie sollten über die anfängliche <b class="code">elements</b> nicht bis zum Ende iterieren, da Sie Paare von Elementen nehmen werden, um den Fehler Index out of range zu vermeiden. Verwenden Sie dafür eine einfache <a target="_blank" href="https://www.w3schools.com/js/js_loop_for.asp">for</a> Schleife und die Eigenschaft array <a target="_blank" href="https://www.w3schools.com/jsref/jsref_length_array.asp">length</a>. 
+        </p>
+        <pre class="brush: javascript">
+for (let i = 0; i < elements.length - 1; i++){...}
+        </pre>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        Was soll ich als nächstes tun?
+    </div>
+    <div class="answer">
+        <p>
+            Jetzt sollten Sie innerhalb der Schleife die Richtung zwischen dem aktuellen Paar von Elementen berechnen - dem <b class="code">i</b>-ten und <b class="code">i+1</b>-ten.
+        </p>
+        <pre class="brush: javascript">
+let dir2 = elements[i + 1] - elements[i];
+        </pre>
+        <p>
+            Bei aufsteigender Reihenfolge erhalten Sie <b class="code">dir2</b> &gt; 0 (der genaue Wert spielt in diesem Fall keine Rolle), bei absteigender - &lt; 0 und wenn die Zahlen gleich sind <b class="code">dir2</b> == 0.
+        </p>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        Ich verstehe. Wie können Sie überprüfen, ob sich die Richtung geändert hat?
+    </div>
+    <div class="answer">
+        <p>
+            In diesem Moment haben Sie eine ursprüngliche Richtung <b class="code">dir</b> und eine aktuelle Richtung <b class="code">dir2</b>. Wenn <b class="code">dir2</b> gleich 0 ist (die Zahlen sind gleich), bedeutet dies, dass die Richtung des aktuellen Paares nicht definiert ist und die gleiche bleibt wie die vorherige und Sie nichts tun. 
+        </p>
+        <pre class="brush: javascript">
+if (dir2){...}
+        </pre>
+        <p>
+            Andernfalls - wenn <b class="code">dir2</b> ungleich 0 ist (das ist der boolesche Wert <b class="code">true</b> und kann eine Bedingung für <b class="code">if</b> sein), sollten Sie prüfen, ob sich die Richtung geändert hat. Nutzen Sie die Idee der Multiplikation von Zahlen mit unterschiedlichen Vorzeichen: zwei "+" und "-" ergeben "+", wenn sie multipliziert werden, "+" und "-" ergeben "-".
+        </p>
+        <p>
+            Wenn also die Richtungen unterschiedlich sind (von "+" - aufsteigend zu "-" - absteigend oder umgekehrt), ist ihre Multiplikation kleiner als 0. Überprüfen wir es also.
+        </p>
+        <pre class="brush: javascript">
+if (dir2){
+    if (dir2 * dir < 0)
+    ...
+}
+        </pre>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        Das ist ein Trick! Aber ich verstehe nicht, wie man ihn anwendet.
+    </div>
+    <div class="answer">
+        <p>
+            Wenn die Multiplikation der Richtungen kleiner als 0 ist, bedeutet dies, dass sich die Richtung geändert hat. Das ist es, wonach Sie suchen und in diesem Fall müssen Sie Ihre <b class="code">count</b> erhöhen.
+        </p>
+        <pre class="brush: javascript">
+if (dir2){
+    if (dir2 * dir < 0) count++;
+    ...}
+        </pre>
+        <p>
+            Sie sollten auch Ihre Basisrichtung <b class="code">dir</b> mit der aktuellen Richtung <b class="code">dir2</b> aktualisieren, um sie beim nächsten Vergleich zu verwenden.
+        </p>
+        <pre class="brush: javascript">
+if (dir2){
+    if (dir2 * dir < 0) count++;
+    dir = dir2;
+}
+        </pre>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        Wie sollte also meine endgültige Lösung aussehen?
+    </div>
+    <div class="answer">
+        <p>
+            Sie müssen nur alles zusammenfügen und Ihren Code in einen Funktionsausdruck verpacken. 
+        </p>
+        <p>Hier ist die gesamte Lösung:</p>
+        <div class="spoiler">
+        <pre class="brush: javascript">
+function changingDirection(elements: number[]): number {
+
+    let dir = 0, count = 0;
+    for (let i = 0; i < elements.length - 1; i++){
+        let dir2 = elements[i + 1] - elements[i];
+        if (dir2){
+            if (dir2 * dir < 0) count++;
+            dir = dir2;
+        }
+    }
+    return count
+}
+        </pre>
+        </div>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        Zeigen Sie mir mehr Lösungen!<br />
+        denn ich möchte ein echter 🥇 Javascript-Held sein!
+    </div>
+    <div class="answer">
+        <p>Klar, schnappen Sie es sich!</p>
+        <p>
+            Hier finden Sie die Richtung zwischen jeweils zwei benachbarten Zahlen und (wenn sie definiert ist und nicht gleich der vorherigen ist) fügen Sie sie zum Array der Richtungen hinzu. Dann geben Sie die Länge dieses Arrays - 1 zurück, da Sie nicht die Richtungen selbst, sondern die Momente ihrer Änderung.
+        </p>
+        <div class="spoiler">
+        <pre class="brush: javascript">
+function changingDirection(elements: number[]): number {
+
+    let dirs = [];
+    for (let i = 0; i < elements.length - 1; i++) {
+        const j = elements[i + 1];
+        if (j> elements[i] && (dirs.length === 0 || dirs.at(-1) === '-')) {
+        dirs.push('+');
+        } else if (j < elements[i] && (dirs.length === 0 || dirs.at(-1) === '+')) {
+        dirs.push('-');
+        }
+    }
+    return dirs.length - (dirs.length === 0? 0: 1);
+    }
+        </pre>
+        </div>
+        <p>Klicken Sie im Missionsmenü auf <b>Best Solutions</b> und sehen Sie sich viele andere interessante Lösungen an!</p>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        Vielen Dank! Ich weiß und verstehe jetzt mehr! Alles funktioniert bestens!
+    </div>
+    <div class="answer">
+        👍 Freut mich zu hören!
+    </div>
+</div>
+</body>
